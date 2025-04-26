@@ -12,3 +12,6 @@ Sample box for a very small child, to introduce them to DnB/Garage/Jungle etc
 ### Code
 - Runs on CircuitPython 9.0
 - Hardware tesst project in `code/hw_test` 
+
+### Samples
+- https://www.reddit.com/r/Drumkits/comments/h9o71o/remeber_the_dj_button_on_the_keyboards_in_school/
