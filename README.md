@@ -27,5 +27,5 @@ Sample box for a very small child, to introduce them to DnB/Garage/Jungle etc
 - [X] Add SD card support to get more samples
     - Flash LEDs to show error if SD card is not present
 - [X] Turn self on/off by driving EN diode-or'd with button
-- Cap volume at minimum rather than scale to zero
+- [X] Cap volume at minimum rather than scale to zero
 - Read battery with external resistor divider

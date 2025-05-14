@@ -12,6 +12,8 @@ import neopixel
 
 import mount_sd
 
+MAX_VOLUME = 0.25  # Maximum volume level, adjust as needed
+
 
 print("Start")
 start_time = time.monotonic_ns()
@@ -30,7 +32,11 @@ def get_volume():
     scale = volume_dial.value / 65535
     # Scale logarithmically to get a more natural volume curve
     volume = scale ** 1.4
-    return volume * 0.25  # Scale to 0.5 to limit the volume
+    # Scale to maximum volume range
+    volume = volume * MAX_VOLUME
+    # Ensure volume is at least 0.025 to avoid silence
+    volume = max(volume, 0.025)  
+    return volume
 
 
 # Table of button pins and audio files
@@ -138,6 +144,7 @@ while True:
     # Check if the volume dial has changed
     volume = get_volume()
     if volume != mixer.voice[0].level:
+        print(f"Volume: {volume:.2f}")
         mixer.voice[0].level = volume * 1
         mixer.voice[1].level = volume * 0.5
     
