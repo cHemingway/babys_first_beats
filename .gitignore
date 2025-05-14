@@ -1,2 +1,5 @@
 .DS_Store
+
+# Sample files
 samples/converted
+samples/original

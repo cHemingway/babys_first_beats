@@ -42,8 +42,8 @@ KEY_DEFINITIONS = [
 ]
 
 # Setup neopixel
-pixel = neopixel.NeoPixel(board.NEOPIXEL, 1)
-pixel.brightness = 0.1
+pixel = neopixel.NeoPixel(board.EXTERNAL_NEOPIXELS, 1)
+pixel.brightness = 0.5
 pixel.fill((0xFF,0x00,0x00))
 
 # Setup audio mixer
@@ -54,6 +54,11 @@ volume = get_volume()
 mixer.voice[0].level = volume   # Sample
 mixer.voice[1].level = volume*0.5    # Loop
 audio.play(mixer)
+
+# Power off pin, connected to KILL external adafruit pushbutton power switch latch board 
+# https://www.adafruit.com/product/1400
+kill_power_pin = DigitalInOut(board.D4)
+kill_power_pin.switch_to_output(value=False)
 
 # External power pin
 external_power = DigitalInOut(board.EXTERNAL_POWER)
@@ -133,3 +138,14 @@ while True:
         # Turn off the neopixel
         pixel.fill((0x00, 0x00, 0x00))
         current_sample = None
+
+
+    # Turn off if no sound has been played for 10 minutes
+    if not currently_playing() and (time.monotonic() - last_played_time > 600):
+            print("No sound played for 10 minutes, turning off")
+            external_power.value = False
+            time.sleep(0.5)
+            kill_power_pin.value = True
+            print("Should now be off")
+            while True:
+                time.sleep(1)
