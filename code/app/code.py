@@ -57,7 +57,7 @@ audio.play(mixer)
 
 # Power off pin, connected to KILL external adafruit pushbutton power switch latch board 
 # https://www.adafruit.com/product/1400
-kill_power_pin = DigitalInOut(board.D4)
+kill_power_pin = DigitalInOut(board.D13)
 kill_power_pin.switch_to_output(value=False)
 
 # External power pin
