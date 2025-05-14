@@ -10,6 +10,9 @@ import analogio
 
 import neopixel
 
+import mount_sd
+
+
 print("Start")
 start_time = time.monotonic_ns()
 
@@ -32,18 +35,18 @@ def get_volume():
 
 # Table of button pins and audio files
 KEY_DEFINITIONS = [
-    {"key": 7, "type":"loop", "filename": "Diesel Not Petrol [-JqV1uJQaLU]_mono22k.wav"},
-    {"key": 0, "type":"sample", "filename": "Worries Soundboy [2025-04-27 210147]_mono22k.wav"},
-    {"key": 1, "type":"sample", "filename": "Killa Vox [2025-04-27 210139]_mono22k.wav"},
-    {"key": 2, "type":"sample", "filename": "Ruling Bad Boy Tune [2025-04-27 210146]_mono22k.wav"},
-    {"key": 3, "type":"sample", "filename": "Champion Badman [2025-04-27 210142]_mono22k.wav"},
-    {"key": 4, "type":"sample", "filename": "bleep [2025-04-27 210136]_mono22k.wav"},
-    {"key": 5, "type":"sample", "filename": "Air Horn Sound Effect [IpyingiCwV8]_mono22k.wav"}
+    {"key": 7, "type":"loop", "filename":   "/sd/Diesel Not Petrol [-JqV1uJQaLU]_mono22k.wav"},
+    {"key": 0, "type":"sample", "filename": "/sd/Worries Soundboy [2025-04-27 210147]_mono22k.wav"},
+    {"key": 1, "type":"sample", "filename": "/sd/Killa Vox [2025-04-27 210139]_mono22k.wav"},
+    {"key": 2, "type":"sample", "filename": "/sd/Ruling Bad Boy Tune [2025-04-27 210146]_mono22k.wav"},
+    {"key": 3, "type":"sample", "filename": "/sd/Champion Badman [2025-04-27 210142]_mono22k.wav"},
+    {"key": 4, "type":"sample", "filename": "/sd/bleep [2025-04-27 210136]_mono22k.wav"},
+    {"key": 5, "type":"sample", "filename": "/sd/Air Horn Sound Effect [IpyingiCwV8]_mono22k.wav"}
 ]
 
 # Setup neopixel
-pixel = neopixel.NeoPixel(board.EXTERNAL_NEOPIXELS, 1)
-pixel.brightness = 0.5
+pixel = neopixel.NeoPixel(board.EXTERNAL_NEOPIXELS, 2, pixel_order=neopixel.GRB)
+pixel.brightness = 1
 pixel.fill((0xFF,0x00,0x00))
 
 # Setup audio mixer
@@ -65,6 +68,11 @@ external_power = DigitalInOut(board.EXTERNAL_POWER)
 external_power.direction = Direction.OUTPUT
 external_power.value = True
 end_time = time.monotonic_ns()
+
+# Mount the SD card
+print("Mounting SD card")
+mount_sd.mount()
+
 print(f"Setup time: {(end_time - start_time)*1E-6:.3f} ms")
 print("Entering main loop")
 
@@ -121,7 +129,7 @@ while True:
                         current_sample = pin_def
                         last_played_time = time.monotonic()
                         # Turn on the neopixel
-                        pixel.fill((0x00, 0xFF, 0x00))
+                        pixel.fill((0xFF, 0x00, 0x00))
                     else:
                         print(f"Unknown type {pin_def['type']} for {pin_def['filename']}")
                     end_time = time.monotonic_ns()
