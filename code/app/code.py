@@ -72,8 +72,10 @@ pixel.fill((0xFF,0x00,0x00))
 
 # Setup audio mixer
 audio = audiobusio.I2SOut(board.I2S_BIT_CLOCK, board.I2S_WORD_SELECT, board.I2S_DATA)
-mixer = audiomixer.Mixer(voice_count=2, sample_rate=22050, channel_count=1,
-                         bits_per_sample=16, samples_signed=True)
+mixer = audiomixer.Mixer(voice_count=2, 
+                         buffer_size=2048,  # Increased over 1024 to avoid buffer underruns
+                         sample_rate=22050, channel_count=1,
+                         bits_per_sample=16, samples_signed=True,)
 volume = get_volume()
 mixer.voice[0].level = volume   # Sample
 mixer.voice[1].level = volume*0.5    # Loop
@@ -184,7 +186,6 @@ while True:
         pixel.fill((0x00, 0x00, 0x00))
         current_sample = None
 
-
     # Turn off if no sound has been played for 10 minutes
     if not currently_playing() and (time.monotonic() - last_played_time > 600):
             print("No sound played for 10 minutes, turning off")
@@ -194,3 +195,6 @@ while True:
             print("Should now be off")
             while True:
                 time.sleep(1)
+
+    # Sleep for a short time to avoid busy waiting
+    time.sleep(0.02)
