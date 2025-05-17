@@ -148,35 +148,44 @@ while True:
             for pin_def in current_mode["defs"]:
                 if event.key_number == pin_def["key"]:
                     start_time = time.monotonic_ns()
-                    # If the button is a loop, stop any currently playing loop
+                    # If the button is a loop
                     if pin_def["type"] == "loop":
-                        if mixer.voice[1].playing:
+                        # If the same loop is pressed again, stop it
+                        if mixer.voice[1].playing and current_loop["key"] == pin_def["key"]:
+                            print("Stopping current loop")
+                            current_loop["wave"].deinit()
                             mixer.voice[1].stop()
-                        # If we were previously playing this loop, then don't play it again
-                        if current_loop and current_loop["filename"] == pin_def["filename"]:
-                            print(f"Already playing {pin_def['filename']}")
                             current_loop = None
-                            continue
-                        # Load the new sound
-                        wave_file = open(pin_def["filename"], "rb")
-                        pin_def["wave"] = audiocore.WaveFile(wave_file)
-                        # Start the sound
-                        mixer.voice[1].play(pin_def["wave"], loop=True)
-                        current_loop = pin_def
-                        last_played_time = time.monotonic()
+                        else: 
+                            # Stop any currently playing sound
+                            if mixer.voice[1].playing:
+                                print("Stopping current loop")
+                                current_loop["wave"].deinit()
+                                mixer.voice[1].stop()
+                                current_loop = None
+                            # Load the new sound
+                            pin_def["wave"] = audiocore.WaveFile(pin_def["filename"])
+                            # Start the sound
+                            mixer.voice[1].play(pin_def["wave"], loop=True)
+                            current_loop = pin_def
+                            last_played_time = time.monotonic()
+                            
                     elif pin_def["type"] == "sample":
                         # If the button is a sample, stop any currently playing sound
                         if mixer.voice[0].playing:
+                            print("Stopping current sample")
+                            current_sample["wave"].deinit() # Deinitialize the old wave file
                             mixer.voice[0].stop()
+                        print(f"{pin_def['filename']}", end=" ")
                         # Load the new sound
-                        wave_file = open(pin_def["filename"], "rb")
-                        pin_def["wave"] = audiocore.WaveFile(wave_file)
+                        print("Open", end=" ")
+                        pin_def["wave"] = audiocore.WaveFile(pin_def["filename"])
                         # Start the sound
+                        print("Play", end=" ")
                         mixer.voice[0].play(pin_def["wave"])
                         current_sample = pin_def
                         last_played_time = time.monotonic()
-                        # Turn on the neopixel
-                        pixel.fill((0xFF, 0x00, 0x00))
+                        print("Playing")
                     else:
                         print(f"Unknown type {pin_def['type']} for {pin_def['filename']}")
                     end_time = time.monotonic_ns()
