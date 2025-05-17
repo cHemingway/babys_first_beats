@@ -14,6 +14,9 @@ import mount_sd
 
 MAX_VOLUME = 0.25  # Maximum volume level, adjust as needed
 
+from microcontroller import watchdog as w
+from watchdog import WatchDogMode
+
 
 print("Start")
 start_time = time.monotonic_ns()
@@ -73,13 +76,20 @@ pixel.fill((0xFF,0x00,0x00))
 # Setup audio mixer
 audio = audiobusio.I2SOut(board.I2S_BIT_CLOCK, board.I2S_WORD_SELECT, board.I2S_DATA)
 mixer = audiomixer.Mixer(voice_count=2, 
-                         buffer_size=2048,  # Increased over 1024 to avoid buffer underruns
+                         buffer_size=4096,  # Increased over 1024 to avoid buffer underruns
                          sample_rate=22050, channel_count=1,
                          bits_per_sample=16, samples_signed=True,)
 volume = get_volume()
 mixer.voice[0].level = volume   # Sample
 mixer.voice[1].level = volume*0.5    # Loop
 audio.play(mixer)
+
+def currently_playing():
+    ''' Check if any sound is currently playing '''
+    for voice in mixer.voice:
+        if voice.playing:
+            return True
+    return False
 
 # Power off pin, connected to KILL external adafruit pushbutton power switch latch board 
 # https://www.adafruit.com/product/1400
@@ -97,26 +107,24 @@ print("Mounting SD card")
 mount_sd.mount()
 
 print(f"Setup time: {(end_time - start_time)*1E-6:.3f} ms")
+
+# Start the watchdog timer
+print("Starting watchdog timer")
+w.timeout = 0.5
+w.mode = WatchDogMode.RESET
+w.feed()
+
+
 print("Entering main loop")
 
 # Setup done
 pixel.fill((0x00,0x00,0x00))
-
 
 # State variables
 current_mode = KEY_DEFINITIONS_TOTAL[0]
 current_loop = None
 current_sample = None
 last_played_time = time.monotonic()
-
-
-def currently_playing():
-    ''' Check if any sound is currently playing '''
-    for voice in mixer.voice:
-        if voice.playing:
-            return True
-    return False
-
 
 while True:
     # Check for button presses
@@ -198,3 +206,5 @@ while True:
 
     # Sleep for a short time to avoid busy waiting
     time.sleep(0.02)
+    # Feed the watchdog timer
+    w.feed()
