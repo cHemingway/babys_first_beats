@@ -59,10 +59,10 @@ KEY_DEFINITIONS_OLD_HIPHOP = [
     {"key": 7, "type":"loop", "filename":   "/Wu Tang - Protect Ya Neck (Drum Loop) 103 BPM [_KVcPm7FgkQ]_mono22k.wav"},
     {"key": 0, "type":"sample", "filename": "/sd/Effect (50) [2025-04-27 210132]_mono22k.wav"},
     {"key": 1, "type":"sample", "filename": "/sd/Six Million Vox [2025-04-27 210144]_mono22k.wav"},
-    {"key": 2, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"},
+    {"key": 2, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"}
     {"key": 3, "type":"sample", "filename": "/sd/Scratch 2 b [2025-04-27 205203]_mono22k.wav"},
     {"key": 4, "type":"sample", "filename": "/sd/Scratch_Kick [2025-04-27 210138]_mono22k.wav"},
-    {"key": 5, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"}
+    {"key": 5, "type":"sample", "filename": "/sd/Null Reload [2025-04-27 210149]_mono22k.wav"},
 ]
 
 KEY_DEFINITIONS_TOTAL = [
@@ -119,11 +119,9 @@ w.feed()
 
 print("Entering main loop")
 
-# Setup done
-pixel.fill((0x00,0x00,0x00))
-
 # State variables
 current_mode = KEY_DEFINITIONS_TOTAL[0]
+pixel.fill(current_mode["color"])
 current_loop = None
 current_sample = None
 last_played_time = time.monotonic()
@@ -214,6 +212,10 @@ while True:
             print("Should now be off")
             while True:
                 time.sleep(1)
+
+
+    # Kick the LED as it takes a few goes to turn on
+    pixel.fill(current_mode["color"])
 
     # Sleep for a short time to avoid busy waiting
     time.sleep(0.02)
