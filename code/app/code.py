@@ -43,8 +43,10 @@ def get_volume():
 
 
 # Table of button pins and audio files
+# Note: Loops should be stored in local storage, samples should be on the SD card
+# This avoid glitches/crashes from simultaneous access
 KEY_DEFINITIONS_PIRATE = [
-    {"key": 7, "type":"loop", "filename":   "/sd/Diesel Not Petrol [-JqV1uJQaLU]_mono22k.wav"},
+    {"key": 7, "type":"loop", "filename":   "/Diesel Not Petrol [-JqV1uJQaLU]_mono22k.wav"},
     {"key": 0, "type":"sample", "filename": "/sd/Worries Soundboy [2025-04-27 210147]_mono22k.wav"},
     {"key": 1, "type":"sample", "filename": "/sd/Killa Vox [2025-04-27 210139]_mono22k.wav"},
     {"key": 2, "type":"sample", "filename": "/sd/Ruling Bad Boy Tune [2025-04-27 210146]_mono22k.wav"},
@@ -54,7 +56,7 @@ KEY_DEFINITIONS_PIRATE = [
 ]
 
 KEY_DEFINITIONS_OLD_HIPHOP = [
-    {"key": 7, "type":"loop", "filename":   "/sd/Fight The Power (Instrumental) - Public Enemy (Produced By The Bomb Squad)_mono22k.wav"},
+    {"key": 7, "type":"loop", "filename":   "/Wu Tang - Protect Ya Neck (Drum Loop) 103 BPM [_KVcPm7FgkQ]_mono22k.wav"},
     {"key": 0, "type":"sample", "filename": "/sd/Effect (50) [2025-04-27 210132]_mono22k.wav"},
     {"key": 1, "type":"sample", "filename": "/sd/Six Million Vox [2025-04-27 210144]_mono22k.wav"},
     {"key": 2, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"},
@@ -169,7 +171,7 @@ while True:
                             mixer.voice[1].play(pin_def["wave"], loop=True)
                             current_loop = pin_def
                             last_played_time = time.monotonic()
-                            
+
                     elif pin_def["type"] == "sample":
                         # If the button is a sample, stop any currently playing sound
                         if mixer.voice[0].playing:
@@ -195,7 +197,7 @@ while True:
     volume = get_volume()
     if volume != mixer.voice[0].level:
         mixer.voice[0].level = volume * 1
-        mixer.voice[1].level = volume * 0.5
+        mixer.voice[1].level = volume * 0.75
     
     # Wait for the sound to finish
     if current_sample and not mixer.voice[0].playing:
