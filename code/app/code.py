@@ -59,7 +59,7 @@ KEY_DEFINITIONS_OLD_HIPHOP = [
     {"key": 7, "type":"loop", "filename":   "/Wu Tang - Protect Ya Neck (Drum Loop) 103 BPM [_KVcPm7FgkQ]_mono22k.wav"},
     {"key": 0, "type":"sample", "filename": "/sd/Effect (50) [2025-04-27 210132]_mono22k.wav"},
     {"key": 1, "type":"sample", "filename": "/sd/Six Million Vox [2025-04-27 210144]_mono22k.wav"},
-    {"key": 2, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"}
+    {"key": 2, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"},
     {"key": 3, "type":"sample", "filename": "/sd/Scratch 2 b [2025-04-27 205203]_mono22k.wav"},
     {"key": 4, "type":"sample", "filename": "/sd/Scratch_Kick [2025-04-27 210138]_mono22k.wav"},
     {"key": 5, "type":"sample", "filename": "/sd/Null Reload [2025-04-27 210149]_mono22k.wav"},
