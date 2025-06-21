@@ -58,16 +58,27 @@ KEY_DEFINITIONS_PIRATE = [
 KEY_DEFINITIONS_OLD_HIPHOP = [
     {"key": 7, "type":"loop", "filename":   "/Wu Tang - Protect Ya Neck (Drum Loop) 103 BPM [_KVcPm7FgkQ]_mono22k.wav"},
     {"key": 0, "type":"sample", "filename": "/sd/Effect (50) [2025-04-27 210132]_mono22k.wav"},
-    {"key": 1, "type":"sample", "filename": "/sd/Six Million Vox [2025-04-27 210144]_mono22k.wav"},
+    {"key": 1, "type":"sample", "filename": "/sd/run_dmc_huh_mono22k.wav"},
     {"key": 2, "type":"sample", "filename": "/sd/wu-tang_clan_-_c.r.e.a.m._(complete_acapella) [2025-04-27 201019]_mono22k.wav"},
     {"key": 3, "type":"sample", "filename": "/sd/Scratch 2 b [2025-04-27 205203]_mono22k.wav"},
     {"key": 4, "type":"sample", "filename": "/sd/Scratch_Kick [2025-04-27 210138]_mono22k.wav"},
     {"key": 5, "type":"sample", "filename": "/sd/Null Reload [2025-04-27 210149]_mono22k.wav"},
 ]
 
+KEY_DEFINITIONS_NEW_HIPHOP = [
+    {"key": 7, "type":"loop", "filename":   "/The Next Episode (Instrumental)_mono22k.wav"},
+    {"key": 0, "type":"sample", "filename": "/sd/Chant_02 [2025-04-27 210128]_mono22k.wav"},
+    {"key": 1, "type":"sample", "filename": "/sd/Chant_03 [2025-04-27 210131]_mono22k.wav"},
+    {"key": 2, "type":"sample", "filename": "/sd/pattalk2 [2025-04-27 210148]_mono22k.wav"},
+    {"key": 3, "type":"sample", "filename": "/sd/dr.dre_-_next_episode_ft.snoop_dogg_(clean_acapella) [2025-04-27 201041]_mono22k.wav"},
+    {"key": 4, "type":"sample", "filename": "/sd/dr.dre_-_next_episode_ft.snoop_dogg_(clean_acapella) [2025-04-27 201106]_mono22k.wav"},
+    {"key": 5, "type":"sample", "filename": "/sd/dr.dre_-_next_episode_ft.snoop_dogg_(clean_acapella) [2025-04-27 201128]_mono22k.wav"},
+]
+
 KEY_DEFINITIONS_TOTAL = [
     {"color":(0x80,00,0x80), "defs":KEY_DEFINITIONS_PIRATE},
-    {"color":(0xFF,0xFF,0x00), "defs":KEY_DEFINITIONS_OLD_HIPHOP}
+    {"color":(0xFF,0xFF,0x00), "defs":KEY_DEFINITIONS_OLD_HIPHOP},
+    {"color":(0x00,0xFF,0x00), "defs":KEY_DEFINITIONS_NEW_HIPHOP}
 ]
 
 # Setup neopixel
@@ -132,8 +143,11 @@ while True:
         if event.pressed:
             # Check if the button is a mode change
             if event.key_number == 6:
-                # Change the mode
-                current_mode = KEY_DEFINITIONS_TOTAL[1] if current_mode == KEY_DEFINITIONS_TOTAL[0] else KEY_DEFINITIONS_TOTAL[0]
+                # Change the mode to the next one
+                current_mode_index = KEY_DEFINITIONS_TOTAL.index(current_mode)
+                current_mode_index = (current_mode_index + 1) % len(KEY_DEFINITIONS_TOTAL)
+                current_mode = KEY_DEFINITIONS_TOTAL[current_mode_index]
+                
                 pixel.fill(current_mode["color"])
                 # Stop any currently playing sound
                 if current_sample:
