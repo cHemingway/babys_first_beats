@@ -71,7 +71,7 @@ KEY_DEFINITIONS_TOTAL = [
 ]
 
 # Setup neopixel
-pixel = neopixel.NeoPixel(board.EXTERNAL_NEOPIXELS, 2, pixel_order=neopixel.GRB)
+pixel = neopixel.NeoPixel(board.EXTERNAL_NEOPIXELS, 2, pixel_order=neopixel.GRBW)
 pixel.brightness = 1
 pixel.fill((0xFF,0x00,0x00))
 
