@@ -2,6 +2,8 @@
 
 Sample box for a very small child, to introduce them to DnB/Garage/Jungle etc
 
+![A photo of the finished device, lots of colorful buttons on a black box](photo.jpg)
+
 ### Hardware
 - [Adafruit RP2040 Prop-Maker Feather](https://learn.adafruit.com/adafruit-rp2040-prop-maker-feather)
     - Modified to remove 10K pullup on EN pin
