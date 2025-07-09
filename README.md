@@ -29,6 +29,8 @@ Sample box for a very small child, to introduce them to DnB/Garage/Jungle etc
 
 ### Credits
 - Many Adafruit models from [Adafruit CAD Parts](https://github.com/adafruit/Adafruit_CAD_Parts)
+- Github Copilot for a lot of the more boring code
 
-### TODO
+### TODO / Known Issues
 - Read battery with external resistor divider
+- Playing two audio files at once from the SD card has a chance of causing horrible glitching sounds until a power cycle. To fix this, we store the loops on the internal memory and the samples on the SD card.
