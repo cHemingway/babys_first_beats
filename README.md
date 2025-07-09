@@ -15,17 +15,18 @@ Sample box for a very small child, to introduce them to DnB/Garage/Jungle etc
 ### Code
 - Runs on CircuitPython 9.0
 - Hardware test project in `code/hw_test` 
+- Actual code in `code/app`
+    - Make sure to manually copy the contents of SD to your SD card with a proper card reader, you can't write to them over the CircuitPython USB interface
 
 ### Samples
-- https://www.reddit.com/r/Drumkits/comments/h9o71o/remeber_the_dj_button_on_the_keyboards_in_school/
-- https://www.reddit.com/r/Drumkits/comments/lug5zw/0gjungle_warfare_1_2_3_official_90s_junglednb/
+- Samples from ross
+- Loops: 
+    - Diesel not Petrol - Sukh Night
+    - [Wu Tang - Protect Ya Neck (Drum Loop) 103 BPM by Krem Drums](https://www.youtube.com/watch?v=_KVcPm7FgkQ)
+    - The Next Episode (Instrumental) - Dr Dre
+
+### Credits
+- Many Adafruit models from [Adafruit CAD Parts](https://github.com/adafruit/Adafruit_CAD_Parts)
 
 ### TODO
-- Add various modes
-    - Press key 6 to cycle
-    - Neopixel LED should indicate mode
-- [X] Add SD card support to get more samples
-    - Flash LEDs to show error if SD card is not present
-- [X] Turn self on/off by driving EN diode-or'd with button
-- [X] Cap volume at minimum rather than scale to zero
 - Read battery with external resistor divider
